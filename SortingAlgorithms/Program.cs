@@ -14,8 +14,7 @@ namespace SortingAlgorithms
             Console.Write("please enter array size: size=");
             int n = int.Parse(Console.ReadLine());
 
-            GreateRandomArray greateArr = new GreateRandomArray();
-            int[] arr = greateArr.CreateArray(n);
+            int[] arr = CreateRandomArray(n);
             Print(arr);
             Console.WriteLine();
 
@@ -31,14 +30,78 @@ namespace SortingAlgorithms
             Console.WriteLine();
 
             Console.Write("please select number(es) which you want:");
+            List<string> substrings = GetSplittingArray();
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            TimeSpan[] spans = new TimeSpan[substrings.Count];
+            Manage manage = new Manage();
+            if (manage != null)
+                for (int i = 0; i < substrings.Count; i++)
+                {
+                    manage.Caller(arr, substrings[i]);
+                    Console.WriteLine();
+                    for (int j = 0; j < OpStr.Length; j++)
+                    {
+                        if (j + 1 == int.Parse(substrings[i]))
+                        {
+                            Op = OpStr[j];
+                        }
+                    }
+                    Console.WriteLine(@"name of the selected algorithm: {0}", Op);
+                    Print(arr);
+
+                    TimeSpan ts = stopWatch.Elapsed;
+                    Console.WriteLine();
+                    spans[i] = ts;
+                    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                    Console.WriteLine("running time of chosen: " + elapsedTime);
+
+                    Console.WriteLine(@"used memory while sorting an array: {0}", GC.GetTotalMemory(false));
+                }
+            stopWatch.Stop();
+            TimeSpan minSpans = GetMinRunningTime(spans);
+            string minSpansTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", minSpans.Hours, minSpans.Minutes, minSpans.Seconds, minSpans.Milliseconds / 10);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Min running time:{0}", minSpansTime);
+            Console.ReadLine();
+        }
+
+        public static TimeSpan GetMinRunningTime(TimeSpan[] spans)
+        {
+            TimeSpan minSpans = spans[0];
+            for (int i = 0; i < spans.Length; i++)
+            {
+                if (spans[i] < minSpans)
+                {
+                    minSpans = spans[i];
+                }
+            }
+            return minSpans;
+        }
+
+        public static int[] CreateRandomArray(int n)
+        {
+            int[] arr = new int[n];
+            Random rand = new Random();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = rand.Next(1, 500);
+            }
+
+            return arr;
+        }
+        private static List<string> GetSplittingArray()
+        {
             List<string> substrings = new List<string>();
             string InputStr = Console.ReadLine();
             if (InputStr == "6")
                 for (int i = 0; i < 6; i++)
                 {
-                    substrings.Add((i+1).ToString());
+                    substrings.Add((i + 1).ToString());
                 }
-                
+
             else if (InputStr.IndexOf("-") != -1)
             {
                 string str = InputStr.Substring(InputStr.Length - 1);
@@ -58,37 +121,7 @@ namespace SortingAlgorithms
                 substrings = InputStr.Split(delimiter).ToList();
             }
 
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            Manage manage = new Manage();
-            if (manage != null)
-                for (int i = 0; i < substrings.Count; i++)
-                {
-                    manage.Caller(arr, substrings[i]);
-                    Console.WriteLine();
-                    for (int j = 0; j < OpStr.Length; j++)
-                    {
-                        if (j + 1 == int.Parse(substrings[i]))
-                        {
-                            Op = OpStr[j];
-                        }
-                    }
-                    Console.WriteLine(@"name of the selected algorithm: {0}", Op);
-                    Print(arr);
-
-                    TimeSpan ts = stopWatch.Elapsed;
-                    Console.WriteLine();
-
-                    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-                                       ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-                    Console.WriteLine("running time of chosen: " + elapsedTime);
-
-                    Console.WriteLine(@"used memory while sorting an array: {0}", GC.GetTotalMemory(false));
-                }
-            stopWatch.Stop();
-
-            Console.ReadLine();
+            return substrings;
         }
         private static void Print(int[] arr)
         {

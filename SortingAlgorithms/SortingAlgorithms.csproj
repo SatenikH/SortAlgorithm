@@ -42,11 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GreateRandomArray.cs" />
+    <Compile Include="HeapSort.cs" />
+    <Compile Include="InsertionSort.cs" />
     <Compile Include="Manage.cs" />
+    <Compile Include="MargeSort.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SortedAlgorithmis.cs" />
+    <Compile Include="QuickSort.cs" />
+    <Compile Include="BubbleSort.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

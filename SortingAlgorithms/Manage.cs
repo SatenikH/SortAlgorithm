@@ -17,25 +17,29 @@ namespace SortingAlgorithms
         }
         public void Caller(int[] arr, string selection)
         {
-            SortedAlgorithmis sortedAlgorithmis = new SortedAlgorithmis();
+            InsertionSort insertionsort = new InsertionSort();
+            HeapSort heapsort = new HeapSort();
+            BubbleSort bubbleSort = new BubbleSort();
+            QuickSort quicksort = new QuickSort();
+            MargeSort margesort = new MargeSort();
             int n = arr.Length - 1;
 
             switch (selection)
             {
                 case "1":
-                    sortedAlgorithmis.InsertionSort(arr);
+                    insertionsort.InsertionSorting(arr);
                     break;
                 case "2":
-                    sortedAlgorithmis.BubbleSort(arr);
+                    bubbleSort.BubbleSorting(arr);
                     break;
                 case "3":
-                    sortedAlgorithmis.QuickSort(arr, 0, n);
+                    quicksort.QuickSorting(arr, 0, n);
                     break;
                 case "4":
-                    sortedAlgorithmis.HeapSort(arr);
+                    heapsort.HeapSorting(arr);
                     break;
                 case "5":
-                    sortedAlgorithmis.mergeSort(arr, 0, n);
+                    margesort.mergeSorting(arr, 0, n);
                     break;
                 default:
                     Console.WriteLine("???");
